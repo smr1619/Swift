@@ -600,6 +600,7 @@ failureCommandFile=$( mktemp -u /var/tmp/dialogCommandFileFailure.XXX )
 
 welcomeTitle="Happy $( date +'%A' ), ${loggedInUserFirstname}!  \nWelcome to your new ${modelName}"
 
+welcomeMessage=
 welcomeMessage="Welcome to LPL and your new ${modelName}, please follow the instructions provided to complete your enrollment. Once ready click **Continue** to start applying your software to your ${modelName}. \n\nOnce everything is Green, please hit the Restart button. If there any errors, you'll be prompted with "number" ${modelName}."
 
 if [ -n "$supportTeamName" ]; then
@@ -629,7 +630,7 @@ fi
 if [[ -n "${brandingBanner}" ]]; then
     welcomeBannerImage="${brandingBanner}"
 else
-    welcomeBannerImage="/Users/Shared/DesktopWallpaper/SYM_Banner.png"
+    welcomeBannerImage="https://img.freepik.com/free-photo/yellow-watercolor-paper_95678-446.jpg"
 fi
 
 if [[ "${brandingBannerDisplayText}" == "true" ]]; then welcomeBannerText="Happy $( date +'%A' ), ${loggedInUserFirstname}!  \nWelcome to your new ${modelName}";
@@ -642,7 +643,7 @@ if curl -L --output /dev/null --silent --head --fail "$welcomeBannerImage" || [ 
     updateScriptLog "WELCOME DIALOG: welcomeBannerImage is available, using it"
 else
     updateScriptLog "WELCOME DIALOG: welcomeBannerImage is not available, using a default image"
-    welcomeBannerImage="/Users/Shared/DesktopWallpapers/profilepicture.png"
+    welcomeBannerImage="https://img.freepik.com/free-photo/yellow-watercolor-paper_95678-448.jpg"
 fi
 
 # Cache the hosted custom welcomeBannerImage
@@ -927,7 +928,7 @@ dialogSetupYourMacCMD="$dialogBinary \
 # The fully qualified domain name of the server which hosts your icons, including any required sub-directories
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-## ## ## ## setupYourMacPolicyArrayIconPrefixUrl="https://ics.services.jamfcloud.com/icon/hash_"
+## ## ## ## ## setupYourMacPolicyArrayIconPrefixUrl="https://ics.services.jamfcloud.com/icon/hash_"
 
 
 
@@ -2118,7 +2119,7 @@ function completionAction() {
 
 function welcomeDialogInfoboxAnimation() {
     callingPID=$1
-    # clock_emojis=("🕐" "🕑" "🕒" "🕓" "🕔" "🕕" "🕖" "🕗" "🕘" "🕙" "🕚" "🕛")
+    # clock_emojis=("�" "�" "�" "�" "�" "�" "�" "�" "�" "�" "�" "�")
     clock_emojis=("&#128336;" "&#128337;" "&#128338;" "&#128339;" "&#128340;" "&#128341;" "&#128342;" "&#128343;" "&#128344;" "&#128345;" "&#128346;" "&#128347;")
     while true; do
         for emoji in "${clock_emojis[@]}"; do
@@ -2141,7 +2142,7 @@ function welcomeDialogInfoboxAnimation() {
 
 function setupYourMacDialogInfoboxAnimation() {
     callingPID=$1
-    # clock_emojis=("🕐" "🕑" "🕒" "🕓" "🕔" "🕕" "🕖" "🕗" "🕘" "🕙" "🕚" "🕛")
+    # clock_emojis=("�" "�" "�" "�" "�" "�" "�" "�" "�" "�" "�" "�")
     clock_emojis=("&#128336;" "&#128337;" "&#128338;" "&#128339;" "&#128340;" "&#128341;" "&#128342;" "&#128343;" "&#128344;" "&#128345;" "&#128346;" "&#128347;")
     while true; do
         for emoji in "${clock_emojis[@]}"; do
