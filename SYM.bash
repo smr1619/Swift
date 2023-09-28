@@ -628,7 +628,7 @@ fi
 if [[ -n "${brandingBanner}" ]]; then
     welcomeBannerImage="${brandingBanner}"
 else
-    welcomeBannerImage="https://img.freepik.com/free-photo/yellow-watercolor-paper_95678-446.jpg"
+    welcomeBannerImage="/Users/Shared/DesktopWallpaper"
 fi
 
 if [[ "${brandingBannerDisplayText}" == "true" ]]; then welcomeBannerText="Happy $( date +'%A' ), ${loggedInUserFirstname}!  \nWelcome to your new ${modelName}";
