@@ -808,7 +808,7 @@ message="Please wait while the following apps are installed …"
 if [[ -n "${brandingBanner}" ]]; then
     bannerImage="${brandingBanner}"
 else
-    bannerImage="https://img.freepik.com/free-photo/yellow-watercolor-paper_95678-446.jpg"
+    bannerImage="/Users/Shared/Banner/SYM_Banner.png"
 fi
 if [[ "${brandingBannerDisplayText}" == "true" ]] ; then bannerText="Setting up ${loggedInUserFirstname}‘s ${modelName}";
 else bannerText=""; fi
