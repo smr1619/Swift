@@ -152,11 +152,11 @@ brandingIconLight="/Users/Shared/DesktopWallpaper/profilepicture.png"
 brandingIconDark="/Users/Shared/DesktopWallpaper/profilepicture.png"
 
 # IT Support Variables - Use these if the default text is fine but you want your org's info inserted instead
-supportTeamName="Support Team Name"
-supportTeamPhone="+1 (801) 555-1212"
+supportTeamName="Test"
+supportTeamPhone="Test"
 supportTeamEmail="support@domain.com"
-supportKB="KB8675309"
-supportTeamErrorKB=", and mention [KB8675309](https://servicenow.company.com/support?id=kb_article_view&sysparm_article=KB8675309#Failures)"
+supportKB="Test"
+supportTeamErrorKB="Test"
 supportTeamHelpKB="
 - **Knowledge Base Article:** KB8675309"
 
