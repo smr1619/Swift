@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=SC2001,SC1112,SC2143,SC2145,SC2086,SC2089,SC2090
+# shellcheck disable=SC2001,SC1111,SC1112,SC2143,SC2145,SC2086,SC2089,SC2090
 
 ####################################################################################################
 #
@@ -10,68 +10,18 @@
 #
 # HISTORY
 #
-#   Version 1.12.0, 21-Aug-2023, Dan K. Snelson (@dan-snelson)
-#   - Add version check to `dialogCheck` ([Pull Request No. 67](https://github.com/dan-snelson/Setup-Your-Mac/pull/67); thanks yet again, @drtaru!)
-#   - Make `presetConfiguration` also apply to `userInput` ([Pull Request No. 63](https://github.com/dan-snelson/Setup-Your-Mac/pull/63); thanks for another one, @rougegoat!)
-#   - Fix for visual hiccup where `infobox` displays "Analyzing input …" if `configurationDownloadEstimation` and `promptForConfiguration` are both set to `false` ([Pull Request No. 69](https://github.com/dan-snelson/Setup-Your-Mac/pull/69); thanks yet again, @rougegoat!)
-#   - Added networkQuality check for macOS Sonoma 14
-#   - Formatting updates
-#   - Updated Palo Alto GlobalProtect icon hash
-#   - Changed "Restart Attended" Completion Action one-liner (Addresses [Issue No. 71](https://github.com/dan-snelson/Setup-Your-Mac/issues/71); thanks, @master-vodawagner!)
-#   - Delay the removal of `overlayicon` (Addresses [Issue No. 73](https://github.com/dan-snelson/Setup-Your-Mac/issues/73); thanks, @mani2care!)
-#   - Added `reconOption` prompts for `realname` and `email` (Addresses [Issue No. 52](https://github.com/dan-snelson/Setup-Your-Mac/issues/52); thanks for the suggestion @brianhm; thanks for the code, @Siggloo!)
-#   - Changed dialog heights to percentages
-#   - Auto-cache / auto-remove a hosted welcomeBannerImage (Addresses [Issue No. 74](https://github.com/dan-snelson/Setup-Your-Mac/issues/74)
-#   - Added a `welcomeDialog` option of `messageOnly` (Addresses [Issue No. 66](https://github.com/dan-snelson/Setup-Your-Mac/issues/66); thanks for the suggestion, @ryanasik)
-#   - Reverted "Restart Attended" Completion Action one-liner (Unaddresses [Issue No. 71](https://github.com/dan-snelson/Setup-Your-Mac/issues/71); sorry, @master-vodawagner)
-#   - Set newly added email address to required (regex courtesy of @bartreardon) (Addresses [Issue No. 75](https://github.com/dan-snelson/Setup-Your-Mac/issues/75); thanks for the suggestion, @ryanasik)
-#   - Added code to pre-fill user's full name (Addresses [Issue No. 76](https://github.com/dan-snelson/Setup-Your-Mac/issues/76); thanks for the suggestion, @ryanasik)
-#   - Reverted dialog heights to pixels
-#   - Updated Vimeo video ID
-#   - Updated `serialNumber` code (with special thanks to @Eltord for saving each and every user `0.0.6` seconds)
-#   - Added `suppressReconOnPolicy` to `-forceNoRecon` flag when executing the `run_jamf_trigger` function (Addresses [Issue No. 79](https://github.com/dan-snelson/Setup-Your-Mac/issues/79); thanks for the idea, @fitzwater-rowan; thanks for yet another PR, @rougegoat!)
-#   - Added "Install Buffers" to each Configuration to include installation time of packages (Addresses [Issue No. 78](https://github.com/dan-snelson/Setup-Your-Mac/issues/78); thanks, @Eltord!
-#   - Added permissions correction on `mktemp`-created files (for swiftDialog `2.3`)
-#   - Updated required version of swiftDialog to `2.3.0.4718`
-#
-#   Version 1.12.1, 21-Aug-2023, Dan K. Snelson (@dan-snelson)
-#   - Added permissions correction on ALL `mktemp`-created files (for swiftDialog `2.3.1`)
-#   - Updated required version of swiftDialog to `2.3.1.4721`
-#
-#   Version 1.12.2, 22-Aug-2023, Dan K. Snelson (@dan-snelson)
-#   - Updated minimum version of macOS to 12
-#   - Corrected deletion of cached welcomeBannerImage
-#
-#   Version 1.12.3, 23-Aug-2023, Dan K. Snelson (@dan-snelson)
-#   - Changed `dialogURL` to new GitHub Repo ([Pull Request No. 88](https://github.com/dan-snelson/Setup-Your-Mac/pull/88); thanks yet again, @drtaru!)
-#
-#   Version 1.12.4, 26-Aug-2023, Dan K. Snelson (@dan-snelson)
-#   - `toggleJamfLaunchDaemon` (during `quitScript` function) based on `completionActionOption` ([Pull Request No. 89](https://github.com/dan-snelson/Setup-Your-Mac/pull/89); thanks for another one, @TechTrekkie!)
-#
-#   Version 1.12.5, 28-Aug-2023, Dan K. Snelson (@dan-snelson)
-#   - Added `sleep "${debugModeSleepAmount}"` to `recon` validation
-#
-#   Version 1.12.6, 30-Aug-2023, Dan K. Snelson (@dan-snelson)
-#   - Reverted `mktemp`-created files to pre-SYM `1.12.1` behaviour
-#   - Updated required version of swiftDialog to `2.3.2.4726`
-#
-#   Version 1.12.7, 09-Sep-2023, Dan K. Snelson (@dan-snelson)
-#   - Added ability disable the "Continue" button in the User Input "Welcome" dialog until Dynamic Download Estimates have complete ([Pull Request No. 93](https://github.com/dan-snelson/Setup-Your-Mac/pull/93); thanks, @Eltord!)
-#   - Added a check to account for if the `loggedInUser` returns in ALL CAPS (as this sometimes happens with SSO Attributes) ([Pull Request No. 94](https://github.com/dan-snelson/Setup-Your-Mac/pull/94); thanks for another one, @Eltord!)
-#   - Added a Pre-flight Check for the running shell environment: Will exit gracefully if the shell does not match \bin\bash. ([Pull Request No. 95](https://github.com/dan-snelson/Setup-Your-Mac/pull/95); thanks — yet again — @drtaru!)
-#   - Remove any default dialog file
-#
-#   Version 1.12.8, 13-Sep-2023, Dan K. Snelson (@dan-snelson)
-#   - Added a check for FileVault being enabled during Setup Assistant (for macOS 14 Sonoma) ([Pull Request No. 96](https://github.com/dan-snelson/Setup-Your-Mac/pull/96); thanks, Obi-@drtaru!)
-#
-#   Version 1.12.9, 15-Sep-2023, Dan K. Snelson (@dan-snelson)
-#   - Added `-L` to `curl` command when caching banner images (thanks for the suggestion, @bartreardon!)
-#   - Added `swiftDialogMinimumRequiredVersion` variable to more easily track the minimum build. ([Pull Request No. 98](https://github.com/dan-snelson/Setup-Your-Mac/pull/98); thanks, @GadgetGeekNI!)
-#   - Hide unused Support variables ([Pull Request No. 99](https://github.com/dan-snelson/Setup-Your-Mac/pull/99); thanks again, @GadgetGeekNI!)
-#   - Added Pre-flight Check: Validate `supportTeam` variables are populated ([Pull Request No. 100](https://github.com/dan-snelson/Setup-Your-Mac/pull/100); thanks for another one, @GadgetGeekNI!)
-#
-#   Version 1.12.10, 15-Sep-2023, Dan K. Snelson (@dan-snelson)
-#   - Better WelcomeMessage logic and variable handling ([Pull Request No. 101](https://github.com/dan-snelson/Setup-Your-Mac/pull/101); thanks big bunches, @GadgetGeekNI!)
+#   Version 1.14.0, 05-Feb-2024
+#   - Updated Vimeo ID
+#   - Corrected omission of [SYM-Helper] for `moveableInProduction`
+#   - Updated "Microsoft Office 365" to "Microsoft 365"
+#   - Added OS Build number to webhook output [Pull Request No. 124](https://github.com/dan-snelson/Setup-Your-Mac/pull/124); thanks, @drtaru!
+#   - Changed filepath validation test from `-f` (i.e., "True if file exists and is a regular file") to `-e` (i.e., "True if file exists (regardless of type)."); thanks for the inspiration, @mrmte! [Issue 19](https://github.com/BIG-RAT/SYM-Helper/issues/19); thanks for the code suggestion, @bartreardon!
+#   - Updates to `README.md`, `CONTRIBUTORS.md` and `CONTRIBUTING.md` [Pull Request No. 128](https://github.com/setup-your-mac/Setup-Your-Mac/pull/128); thanks, @robjschroeder!
+#   - Refactored the way `brandingBanner` variable is checked [Pull Request No. 131](https://github.com/setup-your-mac/Setup-Your-Mac/pull/131); thanks, @drtaru!
+#   - Increased minimum required version of swiftDialog to 2.4.0.4750
+#   - Leveraged the new `listitem: subtitle` option with a dedicated `subtitle` field in `policyJSON`
+#   - Corrected misspelling of "policies" in log entries [Issue No. 134](https://github.com/setup-your-mac/Setup-Your-Mac/issues/134); thanks, @Honestpuck!
+#   - Updated `brandingBanner` to [image by benzoix on Freepik](https://www.freepik.com/author/benzoix)
 #
 ####################################################################################################
 
@@ -87,17 +37,17 @@
 # Script Version and Jamf Pro Script Parameters
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-scriptVersion="1.12.10"
+scriptVersion="1.14.0"
 export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-scriptLog="${4:-"/var/log/lpl.log"}"                        # Parameter 4: Script Log Location [ /var/log/org.churchofjesuschrist.log ] (i.e., Your organization's default location for client-side logs)
-debugMode="${5:-"verbose"}"                                                     # Parameter 5: Debug Mode [ verbose (default) | true | false ]
-welcomeDialog="${6:-"userInput"}"                                               # Parameter 6: Welcome dialog [ userInput (default) | video | messageOnly | false ]
+scriptLog="${4:-"/var/log/org.lpl.log"}"                        # Parameter 4: Script Log Location [ /var/log/org.churchofjesuschrist.log ] (i.e., Your organization's default location for client-side logs)
+debugMode="${5:-"false"}"                                                     # Parameter 5: Debug Mode [ verbose (default) | true | false ]
+welcomeDialog="${6:-"false"}"                                               # Parameter 6: Welcome dialog [ userInput (default) | video | messageOnly | false ]
 completionActionOption="${7:-"Restart Attended"}"                               # Parameter 7: Completion Action [ wait | sleep (with seconds) | Shut Down | Shut Down Attended | Shut Down Confirm | Restart | Restart Attended (default) | Restart Confirm | Log Out | Log Out Attended | Log Out Confirm ]
 requiredMinimumBuild="${8:-"disabled"}"                                         # Parameter 8: Required Minimum Build [ disabled (default) | 22E ] (i.e., Your organization's required minimum build of macOS to allow users to proceed; use "22E" for macOS 13.3)
 outdatedOsAction="${9:-"/System/Library/CoreServices/Software Update.app"}"     # Parameter 9: Outdated OS Action [ /System/Library/CoreServices/Software Update.app (default) | jamfselfservice://content?entity=policy&id=117&action=view ] (i.e., Jamf Pro Self Service policy ID for operating system ugprades)
 webhookURL="${10:-""}"                                                          # Parameter 10: Microsoft Teams or Slack Webhook URL [ Leave blank to disable (default) | https://microsoftTeams.webhook.com/URL | https://hooks.slack.com/services/URL ] Can be used to send a success or failure message to Microsoft Teams or Slack via Webhook. (Function will automatically detect if Webhook URL is for Slack or Teams; can be modified to include other communication tools that support functionality.)
 presetConfiguration="${11:-""}"                                                 # Parameter 11: Specify a Configuration (i.e., `policyJSON`; NOTE: If set, `promptForConfiguration` will be automatically suppressed and the preselected configuration will be used instead)
-swiftDialogMinimumRequiredVersion="2.3.2.4726"                                  # This will be set and updated as dependancies on newer features change.
+swiftDialogMinimumRequiredVersion="2.4.0.4750"                                  # This will be set and updated as dependancies on newer features change.
 
 
 
@@ -114,7 +64,7 @@ failureDialog="true"        # Display the so-called "Failure" dialog (after the 
 # Welcome Message User Input Customization Choices (thanks, @rougegoat!)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# These control which user input boxes are added to the first page of Setup Your Mac. If you do not want to ask about a value, set it to any other value
+# [SYM-Helper] These control which user input boxes are added to the first page of Setup Your Mac. If you do not want to ask about a value, set it to any other value
 promptForUsername="false"
 prefillUsername="true"          # prefills the currently logged in user's username
 promptForRealName="false"
@@ -125,40 +75,47 @@ promptForAssetTag="false"
 promptForRoom="false"
 promptForBuilding="false"
 promptForDepartment="false"
+promptForPosition="false"        # When set to true dynamically prompts the user to select from a list of positions or manually enter one at the welcomeDialog, see "positionListRaw" to define the selection / entry type
 promptForConfiguration="false"   # Removes the Configuration dropdown entirely and uses the "Catch-all (i.e., used when `welcomeDialog` is set to `video` or `false`)" or presetConfiguration policyJSON
 
 # Set to "true" to suppress the Update Inventory option on policies that are called
 suppressReconOnPolicy="false"
 
-# Disables the Blurscreen enabled by default in Production
+# [SYM-Helper] Disables the Blurscreen enabled by default in Production
 moveableInProduction="true"
 
-# An unsorted, comma-separated list of buildings (with possible duplication). If empty, this will be hidden from the user info prompt
+# [SYM-Helper] An unsorted, comma-separated list of buildings (with possible duplication). If empty, this will be hidden from the user info prompt
 buildingsListRaw=""
 
 # A sorted, unique, JSON-compatible list of buildings
 buildingsList=$( echo "${buildingsListRaw}" | tr ',' '\n' | sort -f | uniq | sed -e 's/^/\"/' -e 's/$/\",/' -e '$ s/.$//' )
 
-# An unsorted, comma-separated list of departments (with possible duplication). If empty, this will be hidden from the user info prompt
+# [SYM-Helper] An unsorted, comma-separated list of departments (with possible duplication). If empty, this will be hidden from the user info prompt
 departmentListRaw=""
 
 # A sorted, unique, JSON-compatible list of departments
 departmentList=$( echo "${departmentListRaw}" | tr ',' '\n' | sort -f | uniq | sed -e 's/^/\"/' -e 's/$/\",/' -e '$ s/.$//' )
 
-# Branding overrides
+# An unsorted, comma-separated list of departments (with possible duplication). If empty and promptForPosition is "true" a user-input box will be shown instead of a dropdown
+positionListRaw="Developer,Management,Sales,Marketing"
+
+# A sorted, unique, JSON-compatible list of positions
+positionList=$( echo "${positionListRaw}" | tr ',' '\n' | sort -f | uniq | sed -e 's/^/\"/' -e 's/$/\",/' -e '$ s/.$//' )
+
+# [SYM-Helper] Branding overrides
 brandingBanner="/Users/Shared/DesktopWallpaper/SYM_Banner.png"
 brandingBannerDisplayText="true"
 brandingIconLight="/Users/Shared/DesktopWallpaper/profilepicture.png"
 brandingIconDark="/Users/Shared/DesktopWallpaper/profilepicture.png"
 
-# IT Support Variables - Use these if the default text is fine but you want your org's info inserted instead
-supportTeamName="Test"
-supportTeamPhone="Test"
+# [SYM-Helper] IT Support Variables - Use these if the default text is fine but you want your org's info inserted instead
+supportTeamName="Support Team Name"
+supportTeamPhone="+1 (801) 555-1212"
 supportTeamEmail="support@domain.com"
-supportKB="Test"
-supportTeamErrorKB="Test"
-supportTeamHelpKB="
-- **Knowledge Base Article:** KB8675309"
+supportTeamWebsite="support.domain.com"
+supportTeamHyperlink="[${supportTeamWebsite}](https://${supportTeamWebsite})"
+supportKB="KB8675309"
+supportTeamErrorKB="[KB8675309](https://servicenow.company.com/support?id=kb_article_view&sysparm_article=KB8675309#Failures)"
 
 # Disable the "Continue" button in the User Input "Welcome" dialog until Dynamic Download Estimates have complete [ true | false ] (thanks, @Eltord!)
 lockContinueBeforeEstimations="false"
@@ -196,7 +153,7 @@ configurationOneSize="34"                   # Configuration One in Gibibits (i.e
 configurationOneInstallBuffer="0"           # Buffer time added to estimates to include installation time of packages, in seconds. Set to 0 to disable. 
 
 configurationTwoName="Recommended"
-configurationTwoDescription="Required apps and Microsoft Office"
+configurationTwoDescription="Required apps and Microsoft 365"
 configurationTwoSize="62"                   # Configuration Two in Gibibits (i.e., Total File Size in Gigabytes * 7.451) 
 configurationTwoInstallBuffer="0"           # Buffer time added to estimates to include installation time of packages, in seconds. Set to 0 to disable. 
 
@@ -600,23 +557,28 @@ failureCommandFile=$( mktemp -u /var/tmp/dialogCommandFileFailure.XXX )
 
 welcomeTitle="Happy $( date +'%A' ), ${loggedInUserFirstname}!  \nWelcome to your new ${modelName}"
 
-welcomeMessage=
-welcomeMessage="Welcome to LPL and your new ${modelName}, please follow the instructions provided to complete your enrollment. Once ready click **Continue** to start applying your software to your ${modelName}. \n\nOnce everything is Green, please hit the Restart button. If there any errors, you'll be prompted with "number" ${modelName}."
+welcomeMessage="Please enter the **required** information for your ${modelName}, select your preferred **Configuration** then click **Continue** to start applying settings to your new Mac. \n\nOnce completed, the **Wait** button will be enabled and you‘ll be able to review the results before restarting your ${modelName}."
 
-if [ -n "$supportTeamName" ]; then
-  welcomeMessage+="\n\nIf you need assistance, please contact the ${supportTeamName}:"
+if [[ -n "${supportTeamName}" ]]; then
 
-    if [ -n "$supportTeamPhone" ]; then
-        welcomeMessage+="\n - **Phone**: ${supportTeamPhone}"
+    welcomeMessage+="\n\nIf you need assistance, please contact the **${supportTeamName}**:  \n"
+
+    if [[ -n "${supportTeamPhone}" ]]; then
+        welcomeMessage+="- **Telephone**: ${supportTeamPhone}\n"
     fi
 
-    if [ -n "$supportTeamEmail" ]; then
-        welcomeMessage+="\n - **Email**: ${supportTeamEmail}"
+    if [[ -n "${supportTeamEmail}" ]]; then
+        welcomeMessage+="- **Email**: ${supportTeamEmail}\n"
     fi
-    
-    if [ -n "$supportKB" ]; then
-        welcomeMessage+=" and mention ${supportKB}"
+
+    if [[ -n "${supportTeamWebsite}" ]]; then
+        welcomeMessage+="- **Web**: ${supportTeamHyperlink}\n"
     fi
+
+    if [[ -n "${supportKB}" ]]; then
+        welcomeMessage+="- **Knowledge Base Article:** ${supportTeamErrorKB}\n"
+    fi
+
 fi
 
 welcomeMessage+="\n\n---"
@@ -627,41 +589,62 @@ else
     welcomeMessage=${welcomeMessage//", select your preferred **Configuration**"/}
 fi
 
-if [[ -n "${brandingBanner}" ]]; then
-    welcomeBannerImage="${brandingBanner}"
-else
-    welcomeBannerImage="/Users/Shared/DesktopWallpaper/SYM_Banner2.png"
-fi
 
 if [[ "${brandingBannerDisplayText}" == "true" ]]; then welcomeBannerText="Happy $( date +'%A' ), ${loggedInUserFirstname}!  \nWelcome to your new ${modelName}";
 else welcomeBannerText=""; fi
 welcomeCaption="Please review the above video, then click Continue."
-welcomeVideoID="vimeoid=844672129"
+welcomeVideoID="vimeoid=909473114"
 
-# Check if the custom welcomeBannerImage is available, and if not, use a alternative image
-if curl -L --output /dev/null --silent --head --fail "$welcomeBannerImage" || [ -f "$welcomeBannerImage" ]; then
-    updateScriptLog "WELCOME DIALOG: welcomeBannerImage is available, using it"
-else
-    updateScriptLog "WELCOME DIALOG: welcomeBannerImage is not available, using a default image"
-    welcomeBannerImage="https://img.freepik.com/free-photo/yellow-watercolor-paper_95678-448.jpg"
-fi
 
-# Cache the hosted custom welcomeBannerImage
-if [[ $welcomeBannerImage == *"http"* ]]; then
-    welcomeBannerImageFileName=$( echo ${welcomeBannerImage} | awk -F '/' '{print $NF}' )
-    updateScriptLog "WELCOME DIALOG: Auto-caching hosted '$welcomeBannerImageFileName' …"
-    curl -L --location --silent "$welcomeBannerImage" -o "/var/tmp/${welcomeBannerImageFileName}"
-    welcomeBannerImage="/var/tmp/${welcomeBannerImageFileName}"
-fi
+# Check brandingBanner and cache if necessary
+case ${brandingBanner} in
+
+    *"https"* )
+        welcomeBannerImage="${brandingBanner}"
+        bannerImage="${brandingBanner}"
+        if curl -L --output /dev/null --silent --head --fail "$welcomeBannerImage" || [ -f "$welcomeBannerImage" ]; then
+            updateScriptLog "WELCOME DIALOG: brandingBanner is available, using it"
+        else
+            updateScriptLog "WELCOME DIALOG: brandingBanner is not available, using a default image"
+            welcomeBannerImage="https://img.freepik.com/free-vector/green-abstract-geometric-wallpaper_52683-29623.jpg" # Image by pikisuperstar on Freepik
+            bannerImage="https://img.freepik.com/free-vector/green-abstract-geometric-wallpaper_52683-29623.jpg" # Image by pikisuperstar on Freepik
+        fi
+
+        welcomeBannerImageFileName=$( echo ${welcomeBannerImage} | awk -F '/' '{print $NF}' )
+        updateScriptLog "WELCOME DIALOG: Auto-caching hosted '$welcomeBannerImageFileName' …"
+        curl -L --location --silent "$welcomeBannerImage" -o "/var/tmp/${welcomeBannerImageFileName}"
+        welcomeBannerImage="/var/tmp/${welcomeBannerImageFileName}"
+        bannerImage="/var/tmp/${welcomeBannerImageFileName}"
+        ;;
+
+    */* )
+        updateScriptLog "WELCOME DIALOG: brandingBanner is local file, using it"
+        welcomeBannerImage="${brandingBanner}"
+        bannerImage="${brandingBanner}"
+        ;;
+
+    "None" | "none" | "" )
+        updateScriptLog "WELCOME DIALOG: brandingBanner set to \"None\", or empty"
+        welcomeBannerImage="${brandingBanner}"
+        bannerImage="${brandingBanner}"
+        ;;
+
+    * )
+        updateScriptLog "WELCOME DIALOG: brandingBanner set to \"None\""
+        ;;
+
+esac
+
+
 
 # Welcome icon set to either light or dark, based on user's Apperance setting (thanks, @mm2270!)
 appleInterfaceStyle=$( /usr/bin/defaults read /Users/"${loggedInUser}"/Library/Preferences/.GlobalPreferences.plist AppleInterfaceStyle 2>&1 )
 if [[ "${appleInterfaceStyle}" == "Dark" ]]; then
     if [[ -n "$brandingIconDark" ]]; then welcomeIcon="$brandingIconDark";
-    else welcomeIcon="/Users/Shared/DesktopWallpaper/profilepicture.png"; fi
+    else welcomeIcon="https://cdn-icons-png.flaticon.com/512/740/740878.png"; fi
 else
     if [[ -n "$brandingIconLight" ]]; then welcomeIcon="$brandingIconLight";
-    else welcomeIcon="/Users/Shared/DesktopWallpaper/profilepicture.png"; fi
+    else welcomeIcon="https://cdn-icons-png.flaticon.com/512/979/979585.png"; fi
 fi
 
 
@@ -710,9 +693,10 @@ if [ "$promptForAssetTag" == "true" ]; then
         "regexerror" : "Please enter (at least) seven digits for the Asset Tag, optionally preceded by either AP, IP or CD."
     },'
 fi
-if [ "$promptForRoom" == "true" ]; then roomJSON='{ "title" : "Room","required" : false,"prompt" : "Optional" }'; fi
+if [ "$promptForRoom" == "true" ]; then roomJSON='{ "title" : "Room","required" : false,"prompt" : "Optional" },'; fi
+if [[ "$promptForPosition" == "true" && -z "$positionListRaw" ]]; then positionJSON='{ "title" : "Position","required" : false,"prompt" : "Position" },'; fi
 
-textFieldJSON="${usernameJSON}${realNameJSON}${emailJSON}${compNameJSON}${assetTagJSON}${roomJSON}"
+textFieldJSON="${usernameJSON}${realNameJSON}${emailJSON}${compNameJSON}${assetTagJSON}${positionJSON}${roomJSON}"
 textFieldJSON=$( echo ${textFieldJSON} | sed 's/,$//' )
 
 # Dropdowns
@@ -742,6 +726,19 @@ if [ "$promptForDepartment" == "true" ]; then
     fi
 fi
 
+if [ "$promptForPosition" == "true" ]; then
+    if [ -n "${positionListRaw}" ]; then
+    positionSelectJSON='{
+            "title" : "Position",
+            "default" : "",
+            "required" : true,
+            "values" : [
+                '${positionList}'
+            ]
+        },'
+    fi
+fi
+
 if [ "$promptForConfiguration" == "true" ] && [ -z "${presetConfiguration}" ]; then
     configurationJSON='{
             "title" : "Configuration",
@@ -755,7 +752,7 @@ if [ "$promptForConfiguration" == "true" ] && [ -z "${presetConfiguration}" ]; t
         }'
 fi
 
-selectItemsJSON="${buildingJSON}${departmentJSON}${configurationJSON}"
+selectItemsJSON="${buildingJSON}${departmentJSON}${positionSelectJSON}${configurationJSON}"
 selectItemsJSON=$( echo $selectItemsJSON | sed 's/,$//' )
 
 
@@ -787,7 +784,7 @@ welcomeJSON='
     "selectitems" : [
         '${selectItemsJSON}'
     ],
-    "height" : "860"
+    "height" : "800"
 }
 '
 
@@ -805,52 +802,48 @@ welcomeJSON='
 
 title="Setting up ${loggedInUserFirstname}‘s ${modelName}"
 message="Please wait while the following apps are installed …"
-if [[ -n "${brandingBanner}" ]]; then
-    bannerImage="${brandingBanner}"
+
+if [[ "${brandingBannerDisplayText}" == "true" ]] ; then
+    bannerText="Setting up ${loggedInUserFirstname}‘s ${modelName}";
 else
-    bannerImage="/Users/Shared/Banner/SYM_Banner.png"
+    bannerText=""
 fi
-if [[ "${brandingBannerDisplayText}" == "true" ]] ; then bannerText="Setting up ${loggedInUserFirstname}‘s ${modelName}";
-else bannerText=""; fi
 
 if [ -n "$supportTeamName" ]; then
-  helpmessage+="If you need assistance, please contact the ${supportTeamName}:\n"
+  helpmessage+="If you need assistance, please contact:  \n\n**${supportTeamName}**  \n"
 fi
 
 if [ -n "$supportTeamPhone" ]; then
-  helpmessage+="- **Telephone:** ${supportTeamPhone}\n"
+  helpmessage+="- **Telephone:** ${supportTeamPhone}  \n"
 fi
 
 if [ -n "$supportTeamEmail" ]; then
-  helpmessage+="- **Email:** ${supportTeamEmail}\n"
+  helpmessage+="- **Email:** ${supportTeamEmail}  \n"
+fi
+
+if [ -n "$supportTeamWebsite" ]; then
+    helpmessage+="- **Web**: ${supportTeamHyperlink}  \n"
 fi
 
 if [ -n "$supportKB" ]; then
-  helpmessage+="${supportTeamHelpKB}\n"
+  helpmessage+="- **Knowledge Base Article:** ${supportTeamErrorKB}  \n"
 fi
 
-helpmessage+="\n**Computer Information:**\n"
-helpmessage+="- **Operating System:** ${macOSproductVersion} (${macOSbuildVersion})\n"
-helpmessage+="- **Serial Number:** ${serialNumber}\n"
-helpmessage+="- **Dialog:** ${dialogVersion}\n"
+helpmessage+="\n**Computer Information:**  \n"
+helpmessage+="- **Operating System:** ${macOSproductVersion} (${macOSbuildVersion})  \n"
+helpmessage+="- **Serial Number:** ${serialNumber}  \n"
+helpmessage+="- **Dialog:** ${dialogVersion}  \n"
 helpmessage+="- **Started:** ${timestamp}"
 
 infobox="Analyzing input …" # Customize at "Update Setup Your Mac's infobox"
 
-# Check if the custom bannerImage is available, and if not, use a alternative image
-if curl -L --output /dev/null --silent --head --fail "$bannerImage" || [ -f "$bannerImage" ]; then
-    updateScriptLog "WELCOME DIALOG: bannerImage is available"
-else
-    updateScriptLog "WELCOME DIALOG: bannerImage is not available, using alternative image"
-    bannerImage="https://img.freepik.com/free-photo/yellow-watercolor-paper_95678-448.jpg"
-fi
 
 # Create `overlayicon` from Self Service's custom icon (thanks, @meschwartz!)
 xxd -p -s 260 "$(defaults read /Library/Preferences/com.jamfsoftware.jamf self_service_app_path)"/Icon$'\r'/..namedfork/rsrc | xxd -r -p > /var/tmp/overlayicon.icns
 overlayicon="/var/tmp/overlayicon.icns"
 
 # Uncomment to use generic, Self Service icon as overlayicon
-# overlayicon="https://ics.services.jamfcloud.com/icon/hash_aa63d5813d6ed4846b623ed82acdd1562779bf3716f2d432a8ee533bba8950ee"
+overlayicon="/Users/Shared/DesktopWallpaper/profilepicture.png"
 
 # Set initial icon based on whether the Mac is a desktop or laptop
 if system_profiler SPPowerDataType | grep -q "Battery Power"; then
@@ -880,7 +873,7 @@ dialogSetupYourMacCMD="$dialogBinary \
 --infotext \"$scriptVersion\" \
 --titlefont 'shadow=true, size=36, colour=#FFFDF4' \
 --messagefont 'size=14' \
---height '780' \
+--height '800' \
 --position 'centre' \
 --blurscreen \
 --ontop \
@@ -892,7 +885,7 @@ dialogSetupYourMacCMD="$dialogBinary \
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# "Setup Your Mac" policies to execute (Thanks, Obi-@smithjw!)
+# [SYM-Helper] "Setup Your Mac" policies to execute (Thanks, Obi-@smithjw!)
 #
 # For each configuration step, specify:
 # - listitem: The text to be displayed in the list
@@ -902,7 +895,7 @@ dialogSetupYourMacCMD="$dialogBinary \
 # - trigger: The Jamf Pro Policy Custom Event Name
 # - validation: [ {absolute path} | Local | Remote | None | Recon ]
 #   See: https://snelson.us/2023/01/setup-your-mac-validation/
-#       - {absolute path} (simulates pre-v1.6.0 behavior, for example: "/Applications/Microsoft Teams.app/Contents/Info.plist")
+#       - {absolute path} (simulates pre-v1.6.0 behavior, for example: "/Applications/Microsoft Teams classic.app/Contents/Info.plist")
 #       - Local (for validation within this script, for example: "filevault")
 #       - Remote (for validation via a single-script Jamf Pro policy, for example: "symvGlobalProtect")
 #       - None (for triggers which don't require validation; always evaluates as successful)
@@ -923,12 +916,6 @@ dialogSetupYourMacCMD="$dialogBinary \
 # policy_array=("$(curl -sL $jsonURL)")
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# The fully qualified domain name of the server which hosts your icons, including any required sub-directories
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-## ## ## ## ## setupYourMacPolicyArrayIconPrefixUrl="https://ics.services.jamfcloud.com/icon/hash_"
 
 
 
@@ -952,23 +939,21 @@ function policyJSONConfiguration() {
         
                     {
                         "listitem": "Rosetta2",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_cfa952d9d1bfd66fa35bf3723ac8997cf2d97210b87b9f7b5c5bb742f795283a",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_5f4309a6db6ba9aa3d651e74caa0377c2edc0cee509511d425dc0b648fedcdbf",
                         "progresstext": "Processing policy: Rosetta2",
                         "trigger_list": [
                                          {
                                             "trigger": "InstallRosetta",
                                             "validation": "None"
-                                         },
-                                         {
-                                            "trigger": "InstallRosetta",
-                                            "validation": "Local"
                                          }
                         ]
                     },
                     {
-                        "listitem": "macOS_Adobe Reader 22.003.20258",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_23ff240b9a98439364c1145ccf4437faba1bcec57e5b8ab5628824f3b9103623",
-                        "progresstext": "Processing policy: macOS_Adobe Reader 22.003.20258",
+                        "listitem": "Adobe Reader",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_23ff240b9a98439364c1145ccf4437faba1bcec57e5b8ab5628824f3b9103623",
+                        "progresstext": "Processing policy: Adobe Reader",
                         "trigger_list": [
                                          {
                                             "trigger": "InstallAdobe",
@@ -977,42 +962,10 @@ function policyJSONConfiguration() {
                         ]
                     },
                     {
-                        "listitem": "macOS_ MicrosoftTeams",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_6fcb009cb81e45cea0cbfaea1fac7c7f096ebd539a2217dd09faafb54b2c5e76",
-                        "progresstext": "Processing policy: macOS_ MicrosoftTeams",
-                        "trigger_list": [
-                                         {
-                                            "trigger": "InstallTeams",
-                                            "validation": "None"
-                                         }
-                        ]
-                    },
-                    {
-                        "listitem": "AnyConnect 4.10.04065",
-                        "icon": "",
-                        "progresstext": "Processing policy: AnyConnect 4.10.04065",
-                        "trigger_list": [
-                                         {
-                                            "trigger": "InstallAnyConnect",
-                                            "validation": "None"
-                                         }
-                        ]
-                    },
-                    {
-                        "listitem": "macOS_Box",
-                        "icon": "",
-                        "progresstext": "Processing policy: macOS_Box",
-                        "trigger_list": [
-                                         {
-                                            "trigger": "InstallBox",
-                                            "validation": "None"
-                                         }
-                        ]
-                    },
-                    {
-                        "listitem": "macOS_Chrome",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_ba92154878888897771253a2cfdba24f90f26ffa17ef637a3ce6cb6fc7964750",
-                        "progresstext": "Processing policy: macOS_Chrome",
+                        "listitem": "Chrome",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_b80331711a92c4cfbaa82a40daa494b7b20610c6d5deca464c2bf8d138fd2435",
+                        "progresstext": "Processing policy: Chrome",
                         "trigger_list": [
                                          {
                                             "trigger": "InstallChrome",
@@ -1021,20 +974,10 @@ function policyJSONConfiguration() {
                         ]
                     },
                     {
-                        "listitem": "macOS_Computrace",
-                        "icon": "",
-                        "progresstext": "Processing policy: macOS_Computrace",
-                        "trigger_list": [
-                                         {
-                                            "trigger": "installcomputrace",
-                                            "validation": "None"
-                                         }
-                        ]
-                    },
-                    {
-                        "listitem": "macOS_Microsoft edge",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_5311b52c1e6c751c3e8d0887649a7869014043670b4eddbdb2943be0b7fce1e4",
-                        "progresstext": "Processing policy: macOS_Microsoft edge",
+                        "listitem": "Microsoft edge",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_5311b52c1e6c751c3e8d0887649a7869014043670b4eddbdb2943be0b7fce1e4",
+                        "progresstext": "Processing policy: Microsoft Edge",
                         "trigger_list": [
                                          {
                                             "trigger": "InstallEdge",
@@ -1043,8 +986,33 @@ function policyJSONConfiguration() {
                         ]
                     },
                     {
+                        "listitem": "Webex",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_e76cdf734061502e3712917497c7815f4ce20bb46d796aa9863177662436bfd7",
+                        "progresstext": "Processing policy: Webex",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallWebex",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Box Drive",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_fe5936aac893f8bbcb7a04510b25d85587dd021a64d5d334ff7e1961f964df7e",
+                        "progresstext": "Processing policy: Box Drive",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallBox",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
                         "listitem": "Microsoft Office 365",
-                        "icon": "",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_fdbe11360e02ad57de74f85add83a72cc414ad83437fab646c9d246565bd71e2",
                         "progresstext": "Processing policy: Microsoft Office 365",
                         "trigger_list": [
                                          {
@@ -1054,35 +1022,86 @@ function policyJSONConfiguration() {
                         ]
                     },
                     {
-                        "listitem": "macOS_Webex",
-                        "icon": "",
-                        "progresstext": "Processing policy: macOS_Webex",
+                        "listitem": "Microsoft Teams",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_cc5c4c3a4998a626f86f07cf37368eaa42f1e56ac656ec9c223658982091d103",
+                        "progresstext": "Processing policy: Microsoft Teams",
                         "trigger_list": [
                                          {
-                                            "trigger": "InstallWebex",
+                                            "trigger": "InstallTeams",
                                             "validation": "None"
                                          }
                         ]
                     },
                     {
-                        "listitem": "DLP15.8MP3",
-                        "icon": "",
-                        "progresstext": "Processing policy: DLP15.8MP3",
+                        "listitem": "Anyconnect",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_808bae9c1392de4ebe9fb555573e9b8b739fe3a84a7d29f9bd0f92b91948f297",
+                        "progresstext": "Processing policy: Anyconnect",
                         "trigger_list": [
                                          {
-                                            "trigger": "InstallDLP15.8MP3",
+                                            "trigger": "InstallAnyConnectISE",
                                             "validation": "None"
                                          },
                                          {
-                                            "trigger": "InstallDLP15.8MP3",
-                                            "validation": "Local"
+                                            "trigger": "InstallAnyConnect",
+                                            "validation": "None"
                                          }
                         ]
                     },
                     {
-                        "listitem": "Rapid7 3.1.4.47_ARM64",
-                        "icon": "",
-                        "progresstext": "Processing policy: Rapid7 3.1.4.47_ARM64",
+                        "listitem": "Computrace",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_0bee58123db97053d0dbf0d743017df51610ee1535739c8329535bb9e1b4544f",
+                        "progresstext": "Processing policy: Computrace",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "Installcomputrace",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "CyberArk",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_b35fd0aa123ac00104c57ccadacd3015982d0a29fdbbe505c728ba9b1c75864c",
+                        "progresstext": "Processing policy: CyberArk",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallCyberark",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Crowdstrike",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_34df9532c373b6956040fdb8513bf3eea766112f8dd241128fb45da07506ee71",
+                        "progresstext": "Processing policy: Crowdstrike",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallFalconSensor",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Netskope Agent",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_1040e53afe650cdb9a674c0687e881f56f6b5051324a86d47b3b15d75a122b53",
+                        "progresstext": "Processing policy: Netskope",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallNetskope",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Rapid7 Agent",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_58cd956c7a5e16a5fa0235ed4194ee17972781eee55b9e5ebbf650e30618a16b",
+                        "progresstext": "Processing policy: Rapid7",
                         "trigger_list": [
                                          {
                                             "trigger": "InstallRapid7",
@@ -1091,23 +1110,61 @@ function policyJSONConfiguration() {
                         ]
                     },
                     {
-                        "listitem": "ConnectorID 6.6.2",
-                        "icon": "",
-                        "progresstext": "Processing policy: ConnectorID 6.6.2",
+                        "listitem": "Symantec DLP Agent",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_407619e85a0c946b2511e6db130bdfa0b9ed259a2f19198cd490caeb93d64821",
+                        "progresstext": "Processing policy: Symantec DLP",
                         "trigger_list": [
                                          {
-                                            "trigger": "228",
+                                            "trigger": "InstallDLP",
                                             "validation": "None"
                                          }
                         ]
                     },
                     {
-                        "listitem": "Jamf Recon",
-                        "icon": "",
-                        "progresstext": "Will force your machine to push out any missing or required updated Configuration Profiles.",
+                        "listitem": "Recent View Dock",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_e00020953c064cb139f5d53428cd2e12859f40c114936fa916b83376e633e31d",
+                        "progresstext": "Processing policy: Recent View Dock",
                         "trigger_list": [
                                          {
-                                            "trigger": "162",
+                                            "trigger": "SetRecentDock",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Jamf Connect Reset",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_2c88ef322adb0aaf00648894e72d7fbb39de7d9c02de54dbbb65ea0d9c77aa4d",
+                        "progresstext": "Processing policy: Jamf Connect Reset",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "connectreset",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Set Dock Icons",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_e00020953c064cb139f5d53428cd2e12859f40c114936fa916b83376e633e31d",
+                        "progresstext": "Processing policy: Set Dock Icons",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "SetDock",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Inventory Update",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_3ed8f5918b855edccb90cb37ca0b1f65fde0c7cf7c5a3b5932e8d47e62ad994a",
+                        "progresstext": "Processing policy: Inventory Update",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "inventoryupdate",
                                             "validation": "None"
                                          }
                         ]
@@ -1125,7 +1182,8 @@ function policyJSONConfiguration() {
         
                     {
                         "listitem": "Rosetta2",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_cfa952d9d1bfd66fa35bf3723ac8997cf2d97210b87b9f7b5c5bb742f795283a",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_5f4309a6db6ba9aa3d651e74caa0377c2edc0cee509511d425dc0b648fedcdbf",
                         "progresstext": "Processing policy: Rosetta2",
                         "trigger_list": [
                                          {
@@ -1135,30 +1193,9 @@ function policyJSONConfiguration() {
                         ]
                     },
                     {
-                        "listitem": "Microsoft Office 365",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_fdbe11360e02ad57de74f85add83a72cc414ad83437fab646c9d246565bd71e2",
-                        "progresstext": "Processing policy: Microsoft Office 365",
-                        "trigger_list": [
-                                         {
-                                            "trigger": "InstallOffice",
-                                            "validation": "None"
-                                         }
-                        ]
-                    },
-                    {
-                        "listitem": "MicrosoftTeams",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_6fcb009cb81e45cea0cbfaea1fac7c7f096ebd539a2217dd09faafb54b2c5e76",
-                        "progresstext": "Processing policy: MicrosoftTeams",
-                        "trigger_list": [
-                                         {
-                                            "trigger": "InstallTeams",
-                                            "validation": "None"
-                                         }
-                        ]
-                    },
-                    {
                         "listitem": "Adobe Reader",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_23ff240b9a98439364c1145ccf4437faba1bcec57e5b8ab5628824f3b9103623",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_23ff240b9a98439364c1145ccf4437faba1bcec57e5b8ab5628824f3b9103623",
                         "progresstext": "Processing policy: Adobe Reader",
                         "trigger_list": [
                                          {
@@ -1168,19 +1205,9 @@ function policyJSONConfiguration() {
                         ]
                     },
                     {
-                        "listitem": "Box",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_39ff2a95c1a51e5309c248dce492d5974b8046b418d98c8e2a81bdd991512587",
-                        "progresstext": "Processing policy: Box",
-                        "trigger_list": [
-                                         {
-                                            "trigger": "InstallBox",
-                                            "validation": "None"
-                                         }
-                        ]
-                    },
-                    {
                         "listitem": "Chrome",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_ba92154878888897771253a2cfdba24f90f26ffa17ef637a3ce6cb6fc7964750",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_b80331711a92c4cfbaa82a40daa494b7b20610c6d5deca464c2bf8d138fd2435",
                         "progresstext": "Processing policy: Chrome",
                         "trigger_list": [
                                          {
@@ -1191,8 +1218,9 @@ function policyJSONConfiguration() {
                     },
                     {
                         "listitem": "Microsoft edge",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_5311b52c1e6c751c3e8d0887649a7869014043670b4eddbdb2943be0b7fce1e4",
-                        "progresstext": "Processing policy: Microsoft edge",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_5311b52c1e6c751c3e8d0887649a7869014043670b4eddbdb2943be0b7fce1e4",
+                        "progresstext": "Processing policy: Microsoft Edge",
                         "trigger_list": [
                                          {
                                             "trigger": "InstallEdge",
@@ -1202,7 +1230,8 @@ function policyJSONConfiguration() {
                     },
                     {
                         "listitem": "Webex",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_1c0232c0b63d953ec30b158421a9f962d52b8ae76c68e598d99cbcdb8226958c",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_e76cdf734061502e3712917497c7815f4ce20bb46d796aa9863177662436bfd7",
                         "progresstext": "Processing policy: Webex",
                         "trigger_list": [
                                          {
@@ -1212,34 +1241,173 @@ function policyJSONConfiguration() {
                         ]
                     },
                     {
-                        "listitem": "Computrace",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_213585830c53b3e84749268fbc7e6a7581bf2cdfd539f7fdbc8701eae1f263df",
-                        "progresstext": "Processing policy: Computrace",
+                        "listitem": "Box Drive",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_fe5936aac893f8bbcb7a04510b25d85587dd021a64d5d334ff7e1961f964df7e",
+                        "progresstext": "Processing policy: Box Drive",
                         "trigger_list": [
                                          {
-                                            "trigger": "installcomputrace",
+                                            "trigger": "InstallBox",
                                             "validation": "None"
                                          }
                         ]
                     },
                     {
-                        "listitem": "",
-                        "icon": "",
-                        "progresstext": "Processing policy: ",
+                        "listitem": "Microsoft Office 365",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_fdbe11360e02ad57de74f85add83a72cc414ad83437fab646c9d246565bd71e2",
+                        "progresstext": "Processing policy: Microsoft Office 365",
                         "trigger_list": [
                                          {
-                                            "trigger": "109",
-                                            "validation": "/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app/Contents/Info.plist"
+                                            "trigger": "InstallOffice",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Microsoft Teams",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_cc5c4c3a4998a626f86f07cf37368eaa42f1e56ac656ec9c223658982091d103",
+                        "progresstext": "Processing policy: Microsoft Teams",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallTeams",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Anyconnect",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_808bae9c1392de4ebe9fb555573e9b8b739fe3a84a7d29f9bd0f92b91948f297",
+                        "progresstext": "Processing policy: Anyconnect",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallAnyConnectISE",
+                                            "validation": "None"
+                                         },
+                                         {
+                                            "trigger": "InstallAnyConnect",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Computrace",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_0bee58123db97053d0dbf0d743017df51610ee1535739c8329535bb9e1b4544f",
+                        "progresstext": "Processing policy: Computrace",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "Installcomputrace",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "CyberArk",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_b35fd0aa123ac00104c57ccadacd3015982d0a29fdbbe505c728ba9b1c75864c",
+                        "progresstext": "Processing policy: CyberArk",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallCyberark",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Crowdstrike",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_34df9532c373b6956040fdb8513bf3eea766112f8dd241128fb45da07506ee71",
+                        "progresstext": "Processing policy: Crowdstrike",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallFalconSensor",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Netskope Agent",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_1040e53afe650cdb9a674c0687e881f56f6b5051324a86d47b3b15d75a122b53",
+                        "progresstext": "Processing policy: Netskope",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallNetskope",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Rapid7 Agent",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_58cd956c7a5e16a5fa0235ed4194ee17972781eee55b9e5ebbf650e30618a16b",
+                        "progresstext": "Processing policy: Rapid7",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallRapid7",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Symantec DLP Agent",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_407619e85a0c946b2511e6db130bdfa0b9ed259a2f19198cd490caeb93d64821",
+                        "progresstext": "Processing policy: Symantec DLP",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "InstallDLP",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Recent View Dock",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_e00020953c064cb139f5d53428cd2e12859f40c114936fa916b83376e633e31d",
+                        "progresstext": "Processing policy: Recent View Dock",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "SetRecentDock",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Jamf Connect Reset",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_2c88ef322adb0aaf00648894e72d7fbb39de7d9c02de54dbbb65ea0d9c77aa4d",
+                        "progresstext": "Processing policy: Jamf Connect Reset",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "connectreset",
+                                            "validation": "None"
+                                         }
+                        ]
+                    },
+                    {
+                        "listitem": "Set Dock Icons",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_e00020953c064cb139f5d53428cd2e12859f40c114936fa916b83376e633e31d",
+                        "progresstext": "Processing policy: Set Dock Icons",
+                        "trigger_list": [
+                                         {
+                                            "trigger": "SetDock",
+                                            "validation": "None"
                                          }
                         ]
                     },
                     {
                         "listitem": "Inventory Update",
-                        "icon": "https://ics.services.jamfcloud.com/icon/hash_e00020953c064cb139f5d53428cd2e12859f40c114936fa916b83376e633e31d",
+                        "subtitle": "",
+                        "icon": "https://usw2.ics.services.jamfcloud.com/icon/hash_3ed8f5918b855edccb90cb37ca0b1f65fde0c7cf7c5a3b5932e8d47e62ad994a",
                         "progresstext": "Processing policy: Inventory Update",
                         "trigger_list": [
                                          {
-                                            "trigger": "115",
+                                            "trigger": "inventoryupdate",
                                             "validation": "None"
                                          }
                         ]
@@ -1452,7 +1620,7 @@ function finalise(){
     if [[ "${jamfProPolicyTriggerFailure}" == "failed" ]]; then
 
         outputLineNumberInVerboseDebugMode
-        updateScriptLog "Failed polcies detected …"
+        updateScriptLog "Failed policies detected …"
         if [[ -n "${webhookURL}" ]]; then
             updateScriptLog "Display Failure dialog: Sending webhook message"
             webhookStatus="Failures detected"
@@ -1480,27 +1648,31 @@ function finalise(){
 
             updateScriptLog "\n\n# # #\n# FAILURE DIALOG\n# # #\n"
             updateScriptLog "Jamf Pro Policy Name Failures:"
-            
+            updateScriptLog "${jamfProPolicyNameFailures}"
 
             failureMessage="A failure has been detected, ${loggedInUserFirstname}. \n\nPlease complete the following steps:\n1. Reboot and login to your ${modelName}  \n2. Login to Self Service  \n3. Re-run any failed policy listed below  \n\nThe following failed:  \n${jamfProPolicyNameFailures}"
             
-            if [[ -n "$supportTeamName" ]]; then
-                supportContactMessage+="If you need assistance, please contact the ${supportTeamName},"
+            if [[ -n "${supportTeamName}" ]]; then
 
-                if [[ -n "$supportTeamEmail" ]]; then
-                    supportContactMessage+="\n${supportTeamEmail}"
-                fi
+                supportContactMessage+="If you need assistance, please contact the **${supportTeamName}**:  \n"
 
                 if [[ -n "${supportTeamPhone}" ]]; then
-                    supportContactMessage+="\n${supportTeamPhone}"
+                    supportContactMessage+="- **Telephone:** ${supportTeamPhone}\n"
+                fi
+
+                if [[ -n "${supportTeamEmail}" ]]; then
+                    supportContactMessage+="- **Email:** $supportTeamEmail\n"
+                fi
+
+                if [[ -n "${supportTeamWebsite}" ]]; then
+                    supportContactMessage+="- **Web**: ${supportTeamHyperlink}\n"
                 fi
 
                 if [[ -n "${supportKB}" ]]; then
-                    supportContactMessage+="\n${supportTeamErrorKB}"
+                    supportContactMessage+="- **Knowledge Base Article:** $supportTeamErrorKB\n"
                 fi
-            supportContactMessage+="."
+            
             fi
-
 
             failureMessage+="\n\n${supportContactMessage}"
 
@@ -1529,12 +1701,6 @@ function finalise(){
             dialogUpdateSetupYourMac "progress: reset"
             dialogUpdateSetupYourMac "progresstext: Errors detected; please ${progressTextCompletionAction// and } your ${modelName}, ${loggedInUserFirstname}."
 
-            # If either "wait" or "sleep" has been specified for `completionActionOption`, honor that behavior
-            if [[ "${completionActionOption}" == "wait" ]] || [[ "${completionActionOption}" == "[Ss]leep"* ]]; then
-                updateScriptLog "Honoring ${completionActionOption} behavior …"
-                eval "${completionActionOption}" "${dialogSetupYourMacProcessID}"
-            fi
-
             quitScript "1"
 
         fi
@@ -1542,7 +1708,7 @@ function finalise(){
     else
 
         outputLineNumberInVerboseDebugMode
-        updateScriptLog "All polcies executed successfully"
+        updateScriptLog "All policies executed successfully"
         if [[ -n "${webhookURL}" ]]; then
             webhookStatus="Successful"
             updateScriptLog "Sending success webhook message"
@@ -1555,12 +1721,6 @@ function finalise(){
         dialogUpdateSetupYourMac "progress: complete"
         dialogUpdateSetupYourMac "button1text: ${button1textCompletionActionOption}"
         dialogUpdateSetupYourMac "button1: enable"
-
-        # If either "wait" or "sleep" has been specified for `completionActionOption`, honor that behavior
-        if [[ "${completionActionOption}" == "wait" ]] || [[ "${completionActionOption}" == "[Ss]leep"* ]]; then
-            updateScriptLog "Honoring ${completionActionOption} behavior …"
-            eval "${completionActionOption}" "${dialogSetupYourMacProcessID}"
-        fi
 
         quitScript "0"
 
@@ -1647,7 +1807,7 @@ function confirmPolicyExecution() {
             if [[ "${debugMode}" == "true" ]] || [[ "${debugMode}" == "verbose" ]] ; then
                 updateScriptLog "SETUP YOUR MAC DIALOG: Confirm Policy Execution: DEBUG MODE: Skipping 'run_jamf_trigger ${trigger}'"
                 sleep "${debugModeSleepAmount}"
-            elif [[ -f "${validation}" ]]; then
+            elif [[ -e "${validation}" ]]; then
                 updateScriptLog "SETUP YOUR MAC DIALOG: Confirm Policy Execution: ${validation} exists; skipping 'run_jamf_trigger ${trigger}'"
                 previouslyInstalled="true"
             else
@@ -1716,14 +1876,14 @@ function validatePolicyResult() {
 
         ###
         # Absolute Path
-        # Simulates pre-v1.6.0 behavior, for example: "/Applications/Microsoft Teams.app/Contents/Info.plist"
+        # Simulates pre-v1.6.0 behavior, for example: "/Applications/Microsoft Teams classic.app/Contents/Info.plist"
         ###
 
         */* ) 
             updateScriptLog "SETUP YOUR MAC DIALOG: Validate Policy Result: Testing for \"$validation\" …"
             if [[ "${previouslyInstalled}" == "true" ]]; then
                 dialogUpdateSetupYourMac "listitem: index: $i, status: success, statustext: Previously Installed"
-            elif [[ -f "${validation}" ]]; then
+            elif [[ -e "${validation}" ]]; then
                 dialogUpdateSetupYourMac "listitem: index: $i, status: success, statustext: Installed"
             else
                 dialogUpdateSetupYourMac "listitem: index: $i, status: fail, statustext: Failed"
@@ -1882,7 +2042,11 @@ function validatePolicyResult() {
                     fi
                     ;;
                 * )
-                    updateScriptLog "SETUP YOUR MAC DIALOG: Locally Validate Policy Results Local Catch-all: ${validation}"
+                    updateScriptLog "SETUP YOUR MAC DIALOG: Locally Validate Policy Result: Local Validation “${validation}” Missing"
+                    dialogUpdateSetupYourMac "listitem: index: $i, status: fail, statustext: Missing Local “${validation}” Validation"
+                    jamfProPolicyTriggerFailure="failed"
+                    exitCode="1"
+                    jamfProPolicyNameFailures+="• $listitem  \n"
                     ;;
             esac
             ;;
@@ -2005,7 +2169,7 @@ function completionAction() {
         case ${completionActionOption} in
 
             "Shut Down" )
-                updateScriptLog "Shut Down sans user interaction"
+                updateScriptLog "COMPLETION ACTION: Shut Down sans user interaction"
                 killProcess "Self Service"
                 # runAsUser osascript -e 'tell app "System Events" to shut down'
                 # sleep 5 && runAsUser osascript -e 'tell app "System Events" to shut down' &
@@ -2013,7 +2177,7 @@ function completionAction() {
                 ;;
 
             "Shut Down Attended" )
-                updateScriptLog "Shut Down, requiring user-interaction"
+                updateScriptLog "COMPLETION ACTION: Shut Down, requiring user-interaction"
                 killProcess "Self Service"
                 wait
                 # runAsUser osascript -e 'tell app "System Events" to shut down'
@@ -2022,12 +2186,12 @@ function completionAction() {
                 ;;
 
             "Shut Down Confirm" )
-                updateScriptLog "Shut down, only after macOS time-out or user confirmation"
+                updateScriptLog "COMPLETION ACTION: Shut down, only after macOS time-out or user confirmation"
                 runAsUser osascript -e 'tell app "loginwindow" to «event aevtrsdn»'
                 ;;
 
             "Restart" )
-                updateScriptLog "Restart sans user interaction"
+                updateScriptLog "COMPLETION ACTION: Restart sans user interaction"
                 killProcess "Self Service"
                 # runAsUser osascript -e 'tell app "System Events" to restart'
                 # sleep 5 && runAsUser osascript -e 'tell app "System Events" to restart' &
@@ -2035,7 +2199,7 @@ function completionAction() {
                 ;;
 
             "Restart Attended" )
-                updateScriptLog "Restart, requiring user-interaction"
+                updateScriptLog "COMPLETION ACTION: Restart, requiring user-interaction"
                 killProcess "Self Service"
                 wait
                 # runAsUser osascript -e 'tell app "System Events" to restart'
@@ -2044,12 +2208,12 @@ function completionAction() {
                 ;;
 
             "Restart Confirm" )
-                updateScriptLog "Restart, only after macOS time-out or user confirmation"
+                updateScriptLog "COMPLETION ACTION: Restart, only after macOS time-out or user confirmation"
                 runAsUser osascript -e 'tell app "loginwindow" to «event aevtrrst»'
                 ;;
 
             "Log Out" )
-                updateScriptLog "Log out sans user interaction"
+                updateScriptLog "COMPLETION ACTION: Log out sans user interaction"
                 killProcess "Self Service"
                 # sleep 5 && runAsUser osascript -e 'tell app "loginwindow" to «event aevtrlgo»'
                 # sleep 5 && runAsUser osascript -e 'tell app "loginwindow" to «event aevtrlgo»' &
@@ -2057,7 +2221,7 @@ function completionAction() {
                 ;;
 
             "Log Out Attended" )
-                updateScriptLog "Log out sans user interaction"
+                updateScriptLog "COMPLETION ACTION: Log out sans user interaction"
                 killProcess "Self Service"
                 wait
                 # sleep 5 && runAsUser osascript -e 'tell app "loginwindow" to «event aevtrlgo»'
@@ -2066,25 +2230,30 @@ function completionAction() {
                 ;;
 
             "Log Out Confirm" )
-                updateScriptLog "Log out, only after macOS time-out or user confirmation"
+                updateScriptLog "COMPLETION ACTION: Log out, only after macOS time-out or user confirmation"
                 sleep 5 && runAsUser osascript -e 'tell app "System Events" to log out'
                 ;;
 
             "Sleep"* )
                 sleepDuration=$( awk '{print $NF}' <<< "${1}" )
-                updateScriptLog "Sleeping for ${sleepDuration} seconds …"
+                updateScriptLog "COMPLETION ACTION: Sleeping for ${sleepDuration} seconds …"
                 sleep "${sleepDuration}"
                 killProcess "Dialog"
                 updateScriptLog "Goodnight!"
                 ;;
 
+            "Wait" )
+                updateScriptLog "COMPLETION ACTION: Waiting for user interaction …"
+                wait
+                ;;
+
             "Quit" )
-                updateScriptLog "Quitting script"
+                updateScriptLog "COMPLETION ACTION: Quitting script"
                 exitCode="0"
                 ;;
 
             * )
-                updateScriptLog "Using the default of 'wait'"
+                updateScriptLog "COMPLETION ACTION: Using the default of 'wait'"
                 wait
                 ;;
 
@@ -2214,7 +2383,7 @@ function checkNetworkQualityConfigurations() {
     dialogUpdateWelcome "infobox: **Connection:**  \n- Download:  \n$mbps Mbps  \n\n**Estimates:**  \n- ${configurationOneName}:  \n$(printf '%dh:%dm:%ds\n' $((configurationOneEstimatedSeconds/3600)) $((configurationOneEstimatedSeconds%3600/60)) $((configurationOneEstimatedSeconds%60)))  \n\n- ${configurationTwoName}:  \n$(printf '%dh:%dm:%ds\n' $((configurationTwoEstimatedSeconds/3600)) $((configurationTwoEstimatedSeconds%3600/60)) $((configurationTwoEstimatedSeconds%60)))  \n\n- ${configurationThreeName}:  \n$(printf '%dh:%dm:%ds\n' $((configurationThreeEstimatedSeconds/3600)) $((configurationThreeEstimatedSeconds%3600/60)) $((configurationThreeEstimatedSeconds%60)))"
 
     # If option to lock the continue button is set to true, enable the continue button now to let the user progress
-    if [[ "$lockContinueBeforeEstimations" = "true" ]]; then
+    if [[ "${lockContinueBeforeEstimations}" == "true" ]]; then
         updateScriptLog "WELCOME DIALOG: Enabling Continue Button"
         dialogUpdateWelcome "button1: enable"
     fi
@@ -2268,7 +2437,10 @@ function checkNetworkQualityCatchAllConfiguration() {
 
     updateScriptLog "SETUP YOUR MAC DIALOG: Network Quality Test: Started: $dlStartDate, Ended: $dlEndDate; Download: $mbps Mbps, Responsiveness: $dlResponsiveness"
     dialogUpdateSetupYourMac "infobox: **Connection:**  \n- Download:  \n$mbps Mbps  \n\n**Estimates:**  \n- $(printf '%dh:%dm:%ds\n' $((configurationCatchAllEstimatedSeconds/3600)) $((configurationCatchAllEstimatedSeconds%3600/60)) $((configurationCatchAllEstimatedSeconds%60)))"
-
+    if [[ "${lockContinueBeforeEstimations}" == "true" ]]; then
+        updateScriptLog "WELCOME DIALOG: Enabling Continue Button"
+        dialogUpdateWelcome "button1: enable"
+    fi
 }
 
 
@@ -2336,7 +2508,7 @@ function webHookMessage() {
                         },
                         {
                             "type": "mrkdwn",
-                            "text": "*OS Version:*\n${osVersion}"
+                            "text": "*OS Version:*\n${osVersion} (${osBuild})"
                         },
                         {
                             "type": "mrkdwn",
@@ -2407,7 +2579,7 @@ EOF
             "value": "${loggedInUser}"
         }, {
             "name": "Operating System Version",
-            "value": "${osVersion}"
+            "value": "${osVersion} (${osBuild})"
         }, {
             "name": "Additional Comments",
             "value": "${jamfProPolicyNameFailures}"
@@ -2569,6 +2741,9 @@ if [[ "${welcomeDialog}" == "video" ]]; then
 
     eval "${dialogSetupYourMacCMD[*]}" & sleep 0.3
     dialogUpdateSetupYourMac "activate:"
+    if [[ -n "${overlayoverride}" ]]; then
+        dialogUpdateSetupYourMac "overlayicon: ${overlayoverride}"
+    fi
 
 elif [[ "${welcomeDialog}" == "messageOnly" ]]; then
 
@@ -2588,13 +2763,13 @@ elif [[ "${welcomeDialog}" == "messageOnly" ]]; then
         "infobox" : "",
         "iconsize" : "198.0",
         "button1text" : "Continue",
-        "button2text" : "Quit",
+        "timer" : "60",
         "infotext" : "'"${scriptVersion}"'",
         "blurscreen" : "true",
         "ontop" : "true",
         "titlefont" : "shadow=true, size=36, colour=#FFFDF4",
         "messagefont" : "size=14",
-        "height" : "700"
+        "height" : "800"
     }
     '
 
@@ -2616,6 +2791,9 @@ elif [[ "${welcomeDialog}" == "messageOnly" ]]; then
     # Display main SYM dialog
     eval "${dialogSetupYourMacCMD[*]}" & sleep 0.3
     dialogUpdateSetupYourMac "activate:"
+    if [[ -n "${overlayoverride}" ]]; then
+        dialogUpdateSetupYourMac "overlayicon: ${overlayoverride}"
+    fi
 
 elif [[ "${welcomeDialog}" == "userInput" ]]; then
 
@@ -2635,7 +2813,7 @@ elif [[ "${welcomeDialog}" == "userInput" ]]; then
         echo "$welcomeJSON" > "$welcomeJSONFile"
 
         # If option to lock the continue button is set to true, open welcome dialog with button 1 disabled
-        if [[ "$lockContinueBeforeEstimations" = "true" ]]; then
+        if [[ "${lockContinueBeforeEstimations}" == "true" ]]; then
             
             updateScriptLog "WELCOME DIALOG: Display 'Welcome' dialog with disabled Continue Button …"
             welcomeResults=$( eval "${dialogBinary} --jsonfile ${welcomeJSONFile} --json --button1disabled" )
@@ -2685,6 +2863,13 @@ elif [[ "${welcomeDialog}" == "userInput" ]]; then
             department=$(get_json_value_welcomeDialog "$welcomeResults" "Department" "selectedValue" | grep -v "Please select your department" )
             room=$(get_json_value_welcomeDialog "$welcomeResults" "Room")
             building=$(get_json_value_welcomeDialog "$welcomeResults" "Building" "selectedValue" | grep -v "Please select your building" )
+            
+            if [ -n "${positionListRaw}" ]; then
+                position=$(get_json_value_welcomeDialog "$welcomeResults" "Position" "selectedValue" )
+            else
+                position=$(get_json_value_welcomeDialog "$welcomeResults" "Position")
+            fi
+
 
 
             ###
@@ -2700,6 +2885,7 @@ elif [[ "${welcomeDialog}" == "userInput" ]]; then
             updateScriptLog "WELCOME DIALOG: • Department: $department"
             updateScriptLog "WELCOME DIALOG: • Building: $building"
             updateScriptLog "WELCOME DIALOG: • Room: $room"
+            updateScriptLog "WELCOME DIALOG: • Position: $position"
 
 
             ###
@@ -2792,6 +2978,9 @@ elif [[ "${welcomeDialog}" == "userInput" ]]; then
             # Room
             if [[ -n "${room}" ]]; then reconOptions+="-room \"${room}\" "; fi
 
+            # Position
+            if [[ -n "${position}" ]]; then reconOptions+="-position \"${position}\" "; fi
+
             # Output `recon` options to log
             updateScriptLog "WELCOME DIALOG: reconOptions: ${reconOptions}"
 
@@ -2800,7 +2989,6 @@ elif [[ "${welcomeDialog}" == "userInput" ]]; then
             ###
 
             eval "${dialogSetupYourMacCMD[*]}" & sleep 0.3
-            dialogSetupYourMacProcessID=$!
             until pgrep -q -x "Dialog"; do
                 outputLineNumberInVerboseDebugMode
                 updateScriptLog "WELCOME DIALOG: Waiting to display 'Setup Your Mac' dialog; pausing"
@@ -2808,6 +2996,9 @@ elif [[ "${welcomeDialog}" == "userInput" ]]; then
             done
             updateScriptLog "WELCOME DIALOG: 'Setup Your Mac' dialog displayed; ensure it's the front-most app"
             runAsUser osascript -e 'tell application "Dialog" to activate'
+            if [[ -n "${overlayoverride}" ]]; then
+                dialogUpdateSetupYourMac "overlayicon: ${overlayoverride}"
+            fi
             ;;
 
         2)  # Process exit code 2 scenario here
@@ -2856,7 +3047,6 @@ else
     ###
 
     eval "${dialogSetupYourMacCMD[*]}" & sleep 0.3
-    dialogSetupYourMacProcessID=$!
     until pgrep -q -x "Dialog"; do
         outputLineNumberInVerboseDebugMode
         updateScriptLog "WELCOME DIALOG: Waiting to display 'Setup Your Mac' dialog; pausing"
@@ -2864,6 +3054,9 @@ else
     done
     updateScriptLog "WELCOME DIALOG: 'Setup Your Mac' dialog displayed; ensure it's the front-most app"
     runAsUser osascript -e 'tell application "Dialog" to activate'
+    if [[ -n "${overlayoverride}" ]]; then
+        dialogUpdateSetupYourMac "overlayicon: ${overlayoverride}"
+    fi
 
 fi
 
@@ -2881,6 +3074,8 @@ for (( i=0; i<dialog_step_length; i++ )); do
     list_item_array+=("$listitem")
     icon=$(get_json_value "${policyJSON}" "steps[$i].icon")
     icon_url_array+=("$icon")
+    subtitle=$(get_json_value "${policyJSON}" "steps[$i].subtitle")
+    subtitle_array+=("$subtitle")
 done
 
 
@@ -2908,7 +3103,8 @@ outputLineNumberInVerboseDebugMode
 list_item_string=${list_item_array[*]/%/,}
 dialogUpdateSetupYourMac "list: ${list_item_string%?}"
 for (( i=0; i<dialog_step_length; i++ )); do
-    dialogUpdateSetupYourMac "listitem: index: $i, icon: ${icon_url_array[$i]}, status: pending, statustext: Pending …"
+    # dialogUpdateSetupYourMac "listitem: index: $i, icon: ${icon_url_array[$i]}, status: pending, statustext: Pending …"
+    dialogUpdateSetupYourMac "listitem: index: $i, icon: ${icon_url_array[$i]}, status: pending, statustext: Pending …, subtitle: ${subtitle_array[$i]}"
 done
 dialogUpdateSetupYourMac "list: show"
 
@@ -2976,6 +3172,7 @@ if [[ -n ${infoboxConfiguration} ]]; then infobox+="**Configuration:**  \n$infob
 if [[ -n ${department} ]]; then infobox+="**Department:**  \n$department  \n\n" ; fi
 if [[ -n ${building} ]]; then infobox+="**Building:**  \n$building  \n\n" ; fi
 if [[ -n ${room} ]]; then infobox+="**Room:**  \n$room  \n\n" ; fi
+if [[ -n ${position} ]]; then infobox+="**Position:**  \n$position  \n\n" ; fi
 
 if { [[ "${promptForConfiguration}" != "true" ]] && [[ "${configurationDownloadEstimation}" == "true" ]]; } || { [[ "${welcomeDialog}" == "false" ]] || [[ "${welcomeDialog}" == "messageOnly" ]]; } then
     updateScriptLog "SETUP YOUR MAC DIALOG: Purposely NOT updating 'infobox'"
@@ -2996,32 +3193,38 @@ if [[ "${symConfiguration}" != *"Catch-all"* ]]; then
 
     if [[ -n ${infoboxConfiguration} ]]; then
 
-        updateScriptLog "Update 'helpmessage' with Configuration: ${infoboxConfiguration} …"
+        if [[ -n "${supportTeamName}" ]]; then
 
-        helpmessage="If you need assistance…  \n\n"
+        updateScriptLog "Update 'helpmessage' with support-related information …"
+
+            helpmessage="If you need assistance, please contact:  \n\n**${supportTeamName}**  \n"
+            
+            if [[ -n "${supportTeamPhone}" ]]; then
+                helpmessage+="- **Telephone:** ${supportTeamPhone}  \n"
+            fi
+
+            if [[ -n "${supportTeamEmail}" ]]; then
+                helpmessage+="- **Email:** ${supportTeamEmail}  \n"
+            fi
+
+            if [[ -n "${supportTeamWebsite}" ]]; then
+                helpmessage+="- **Web**: ${supportTeamHyperlink}  \n"
+            fi
         
-        if [ -n "$supportTeamName" ]; then
-            helpmessage+="Please contact the $supportTeamName:\n"
+            if [[ -n "${supportKB}" ]]; then
+                helpmessage+="- **Knowledge Base Article:** ${supportTeamErrorKB}  \n"
+            fi
+
         fi
 
-        if [ -n "$supportTeamPhone" ]; then
-            helpmessage+="- **Telephone:** $supportTeamPhone\n"
-        fi
-
-        if [ -n "$supportTeamEmail" ]; then
-            helpmessage+="- **Email:** $supportTeamEmail\n"
-        fi
-
-        if [ -n "$supportKB" ]; then
-            helpmessage+="- **Knowledge Base Article:** $supportKB\n"
-        fi
-
+        updateScriptLog "Update 'helpmessage' with Configuration: ${infoboxConfiguration} …"
         helpmessage+="\n**Configuration:**\n- $infoboxConfiguration\n"
-        helpmessage+="\n**Computer Information:**\n"
-        helpmessage+="- **Operating System:** $macOSproductVersion ($macOSbuildVersion)\n"
-        helpmessage+="- **Serial Number:** $serialNumber\n"
-        helpmessage+="- **Dialog:** $dialogVersion\n"
-        helpmessage+="- **Started:** $timestamp\n"
+
+        helpmessage+="\n**Computer Information:**  \n"
+        helpmessage+="- **Operating System:** ${macOSproductVersion} (${macOSbuildVersion})  \n"
+        helpmessage+="- **Serial Number:** ${serialNumber}  \n"
+        helpmessage+="- **Dialog:** ${dialogVersion}  \n"
+        helpmessage+="- **Started:** ${timestamp}"
         
     fi
 
