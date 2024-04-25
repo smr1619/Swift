@@ -82,7 +82,7 @@ promptForConfiguration="false"   # Removes the Configuration dropdown entirely a
 suppressReconOnPolicy="false"
 
 # [SYM-Helper] Disables the Blurscreen enabled by default in Production
-moveableInProduction="true"
+moveableInProduction="false"
 
 # [SYM-Helper] An unsorted, comma-separated list of buildings (with possible duplication). If empty, this will be hidden from the user info prompt
 buildingsListRaw=""
@@ -142,7 +142,7 @@ exitCode="0"
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 configurationDownloadEstimation="true"      # [ true (default) | false ]
-correctionCoefficient="1.01"                # "Fudge factor" (to help estimate match reality)
+correctionCoefficient="5.05"                # "Fudge factor" (to help estimate match reality)
 
 configurationCatchAllSize="34"              # Catch-all Configuration in Gibibits (i.e., Total File Size in Gigabytes * 7.451)
 configurationCatchAllInstallBuffer="0"      # Buffer time added to estimates to include installation time of packages, in seconds. Set to 0 to disable. 
